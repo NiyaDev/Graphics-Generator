@@ -1,0 +1,18 @@
+{
+  "langrev": "1",
+  "warnings": [ "no-unused" ],
+  "dependency-search-paths": [ "lib", "../pleroma/" ],
+  "dependencies": [ "pleroma" ],
+  "authors": [ "NiyaDev" ],
+  "version": "0.1.0",
+  "sources": [ "src/**" ],
+  "test-sources": [ "test/**" ],
+  "output": "build",
+  "targets": {
+    "graphics_gen": {
+      "type": "executable",
+    },
+  },
+  "cpu": "generic",
+  "opt": "O0"
+}

@@ -12,7 +12,7 @@ bool currently_drawing = false;
 
 struct Achievement {
 	Texture icon_unobtained, icon_obtained;
-	String title, description;
+	String title, description, icon_str;
 	int points;
 	AchievementType type;
 }
@@ -29,14 +29,15 @@ enum AchievementType {
 fn Achievement TypedValue.to_achievement(&self, String name) {
   Achievement output;
 
-  String unobtained_path = string::tformat("resources/%s/%d_lock.png", graphics_gen::DIRECTORY, self.get_object("badgeName").v_int);
+  String unobtained_path = string::format(allocator::heap(), "resources/%s/%d_lock.png", graphics_gen::DIRECTORY, self.get_object("badgeName").v_int);
   
   output.icon_unobtained = texture::load(unobtained_path);
-  String obtained_path = string::tformat("resources/%s/%d.png", graphics_gen::DIRECTORY, self.get_object("badgeName").v_int);
+  String obtained_path = string::format(allocator::heap(), "resources/%s/%d.png", graphics_gen::DIRECTORY, self.get_object("badgeName").v_int);
   output.icon_obtained = texture::load(obtained_path);
 
   output.title = name;
   output.description = self.get_object("description").v_string;
+  output.icon_str = string::format(allocator::heap(), "%d",self.get_object("badgeName").v_int);
   output.points = self.get_object("points").v_int;
 
   return output;
@@ -73,6 +74,29 @@ fn void Achievement.draw(&self) {
     font.draw_pro(self.title, {170,y_position+20}, {0,0}, 0, 30, 0, color::WHITE);
     font.draw_pro(self.description, {170,y_position+70}, {0,0}, 0, 20, 0, color::WHITE);
   }
+}
+<**>
+fn void Achievement.save(&self, String filepath) {
+  File f = file::open(filepath, "wb")!!;
+
+  String data = string::format(
+    allocator::heap(),
+    "%s%s%s%s%s%s%s%s%s%s%s(%d)%s%s%s%s%s",
+    clip_0, icon, self.icon_str, "_lock.png",
+    clip_1, icon, self.icon_str, ".png",
+    clip_2, self.title,
+    clip_3, self.points,
+    clip_4, self.description,
+    clip_5, self.title,
+    clip_6, 
+  );
+  f.write((char[])data)!!;
+  f.close()!!;
+  free(data);
+}
+<**>
+fn void Achievement.free(&self) {
+  
 }
 <* Prints all achievement info *>
 fn void Achievement.print(&self) {

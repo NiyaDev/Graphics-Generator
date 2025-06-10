@@ -27,7 +27,7 @@ for(var key in game['achievements']) {
   const save_unlocked = save_loc + a['badgeName'] + ".png";
   const save_locked = save_loc + a['badgeName'] + "_lock.png";
 
-    // Download unlocked icon
+  // Download unlocked icon
   const unlocked_file = createWriteStream(save_unlocked);
   get(url_unlocked, response => {
     response.pipe(unlocked_file);

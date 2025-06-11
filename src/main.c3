@@ -6,7 +6,7 @@ import pleroma;
 
 
 
-const String DIRECTORY = "14817";
+const String DIRECTORY = "14853";
 
 Keybindings keybinds;
 List{Achievement} achievos;
@@ -28,16 +28,6 @@ fn int main(String[] args) {
 	String yaml_path = string::tformat("%s/achievements.yml", directory_path);
 	Yaml yml = yaml::parse_file(yaml_path);
 
-	TypedValue king = yml["King of Nothing At All"]!!;
-	//king.v_object.@each(; String key, TypedValue val) {
-	io::printfn(
-		"[%d] - [%s] - [%s]",
-		king.get_object("badgeName").v_int,
-		king.get_object("description").v_string,
-		king.get_object("points").type,
-	);
-	//};
-
 	usz count = 0;
 	io::printfn("Total count: %d", yml.len());
 	yml.@each(; String key, TypedValue val) {
@@ -45,22 +35,16 @@ fn int main(String[] args) {
 		String filepath = string::tformat("resources/achievements/%s.json", key);
 
 		Achievement a = val.to_achievement(key);
-		//io::printfn("[%d] - Saved: [%s.png]", count, key);
 		a.save(filepath);
-		//achievos.push(a);
 	};
 
-	while (!raylib::window_should_close()) {
+	while (false) { //(!raylib::window_should_close()) {
 		if (keybinds.is_pressed("start_next") && !achievements::currently_drawing) {
-			//achievos[current_achievement].start();
-			//current_achievement++;
-			//if (current_achievement > achievos.len()) current_achievement = 0;
 		}
 
 
 		raylib::begin_drawing();
 		raylib::clear_background(color::GREEN);
-		//achievos[current_achievement].draw();
 
 		raylib::end_drawing();
 	}

@@ -38,7 +38,7 @@ fn int main(String[] args) {
 		a.save(filepath);
 	};
 
-	while (false) { //(!raylib::window_should_close()) {
+	while (false) {
 		if (keybinds.is_pressed("start_next") && !achievements::currently_drawing) {
 		}
 
